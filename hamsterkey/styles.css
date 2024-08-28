@@ -1,0 +1,96 @@
+﻿body {
+    font-family: Arial, sans-serif;
+    background-color: #2e2e2e;
+    color: #fff;
+    text-align: center;
+}
+
+.banner {
+    background-color: #ff0000;
+    height: 50px;
+    margin-bottom: 20px;
+}
+
+.timer-container, .select-container, .generate-container, .key-container, .balance-container {
+    margin: 20px 0;
+}
+
+#timer {
+    font-size: 24px;
+}
+
+#gameSelect {
+    padding: 10px;
+    font-size: 16px;
+}
+
+#generateBtn {
+    padding: 10px;
+    font-size: 16px;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+#generateBtn.disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+}
+
+.key-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#keyDisplay {
+    padding: 10px;
+    font-size: 16px;
+    width: 200px;
+    margin-right: 10px;
+    border: none;
+    text-align: center;
+}
+
+#copyBtn {
+    padding: 10px;
+    font-size: 16px;
+    background-color: #2196f3;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.balance-container {
+    font-size: 18px;
+}
+
+#info {
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #444;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.popup p {
+    margin-bottom: 20px;
+}
+
+.footer {
+    margin-top: 20px;
+}
+
+.footer a {
+    color: #2196f3;
+    text-decoration: none;
+}

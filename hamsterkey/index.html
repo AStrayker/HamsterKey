@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Key Generator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="banner">
+        <!-- Здесь будет рекламный баннер -->
+    </div>
+    
+    <div class="timer-container">
+        <div id="timer">00:00</div>
+    </div>
+
+    <div class="select-container">
+        <select id="gameSelect">
+            <option value="Bike Ride 3D">Bike Ride 3D</option>
+            <option value="My Clone Army">My Clone Army</option>
+            <option value="Chain Cube 2048">Chain Cube 2048</option>
+            <option value="Train Miner">Train Miner</option>
+            <option value="Merge Away">Merge Away</option>
+            <option value="Twerk Race 3D">Twerk Race 3D</option>
+            <option value="Polysphere">Polysphere</option>
+            <option value="Mud Racing">Mud Racing</option>
+            <option value="Mow and Trim">Mow and Trim</option>
+            <option value="Cafe Dash">Cafe Dash</option>
+        </select>
+    </div>
+    
+    <div class="generate-container">
+        <button id="generateBtn" onclick="generateKey()">Generate Key</button>
+    </div>
+
+    <div class="key-container">
+        <input type="text" id="keyDisplay" readonly>
+        <button id="copyBtn" onclick="copyKey()">Copy</button>
+    </div>
+    
+    <div class="balance-container">
+        <span id="balance">Balance: 6</span>
+        <span id="info" onclick="showInfo()">?</span>
+    </div>
+
+    <div id="infoPopup" class="popup">
+        <p>You can generate 6 free keys. After that, earn more by clicking ads!</p>
+        <button onclick="closeInfo()">Close</button>
+    </div>
+
+    <div class="footer">
+        <a href="mailto:your_email@example.com">Contact Us</a>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
