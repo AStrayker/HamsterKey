@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Banner</title>
+</head>
+<body>
+    <form>
+        <label for="avatar">Avatar Image:</label>
+        <input type="file" id="avatar" accept="image/*"><br><br>
+
+        <label for="title">Title:</label>
+        <input type="text" id="title"><br><br>
+
+        <label for="description">Description:</label>
+        <textarea id="description"></textarea><br><br>
+
+        <label for="buttonText">Button Text:</label>
+        <input type="text" id="buttonText"><br><br>
+
+        <label for="background">Background Color:</label>
+        <input type="color" id="background"><br><br>
+
+        <button type="button" onclick="generateBanner()">Generate Banner</button>
+    </form>
+
+    <div id="preview"></div>
+
+    <script>
+        function generateBanner() {
+            const avatar = document.getElementById("avatar").files[0];
+            const title = document.getElementById("title").value;
+            const description = document.getElementById("description").value;
+            const buttonText = document.getElementById("buttonText").value;
+            const background = document.getElementById("background").value;
+
+            // Здесь вы можете создать код для генерации баннера и вставить его в preview
+            // Это просто пример, так как реальные баннеры могут требовать серверных технологий для создания изображений
+            document.getElementById("preview").innerHTML = `
+                <div style="background-color: ${background}; padding: 10px;">
+                    <img src="${URL.createObjectURL(avatar)}" style="border-radius: 50%;">
+                    <h3>${title}</h3>
+                    <p>${description}</p>
+                    <button>${buttonText}</button>
+                </div>`;
+        }
+    </script>
+</body>
+</html>
