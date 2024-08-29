@@ -1,22 +1,67 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Key Generator</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Key Generator</title>
+    <style>
+        /* Добавьте CSS-стили для оформления сайта */
+        body { 
+            background-color: #262626; 
+            color: #fff; 
+            font-family: Arial, sans-serif; 
+            text-align: center; 
+        }
+        .container {
+            padding: 20px;
+        }
+        .selector, .generate-btn, .key-display, .copy-btn, .timer {
+            margin: 10px 0;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .selector {
+            background-color: #007bff;
+            color: white;
+        }
+        .generate-btn {
+            background-color: #28a745;
+            color: white;
+            cursor: pointer;
+        }
+        .generate-btn:disabled {
+            background-color: #6c757d;
+            cursor: not-allowed;
+        }
+        .key-display {
+            background-color: #fff;
+            color: #000;
+            font-family: monospace;
+            padding: 10px;
+            border: 2px solid #000;
+            width: 300px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .copy-btn {
+            background-color: #007bff;
+            color: white;
+            margin-left: 10px;
+        }
+        .timer {
+            color: #ffc107;
+        }
+    </style>
 </head>
 <body>
-    <div class="banner">
-        <!-- Здесь будет рекламный баннер -->
-    </div>
-    
-    <div class="timer-container">
-        <div id="timer">00:00</div>
-    </div>
-
-    <div class="select-container">
-        <select id="gameSelect">
+    <div class="container">
+        <div class="banner">Рекламный баннер</div>
+        <div id="timer" class="timer">00:00</div>
+        <select id="game-selector" class="selector">
             <option value="Bike Ride 3D">Bike Ride 3D</option>
             <option value="My Clone Army">My Clone Army</option>
             <option value="Chain Cube 2048">Chain Cube 2048</option>
@@ -28,31 +73,75 @@
             <option value="Mow and Trim">Mow and Trim</option>
             <option value="Cafe Dash">Cafe Dash</option>
         </select>
-    </div>
-    
-    <div class="generate-container">
-        <button id="generateBtn" onclick="generateKey()">Generate Key</button>
-    </div>
-
-    <div class="key-container">
-        <input type="text" id="keyDisplay" readonly>
-        <button id="copyBtn" onclick="copyKey()">Copy</button>
-    </div>
-    
-    <div class="balance-container">
-        <span id="balance">Balance: 6</span>
-        <span id="info" onclick="showInfo()">?</span>
+        <button id="generate-btn" class="generate-btn">Сгенерировать ключ</button>
+        <div id="key-display" class="key-display">Ваш ключ появится здесь</div>
+        <button id="copy-btn" class="copy-btn" onclick="copyKey()">Копировать</button>
     </div>
 
-    <div id="infoPopup" class="popup">
-        <p>You can generate 6 free keys. After that, earn more by clicking ads!</p>
-        <button onclick="closeInfo()">Close</button>
-    </div>
+    <script>
+        const keyFiles = {
+            "Bike Ride 3D": "keys-bike-ride.txt",
+            "My Clone Army": "keys-my-clone.txt",
+            // Добавьте файлы для других игр
+        };
 
-    <div class="footer">
-        <a href="mailto:your_email@example.com">Contact Us</a>
-    </div>
+        document.getElementById('generate-btn').addEventListener('click', generateKey);
 
-    <script src="script.js"></script>
+        function generateKey() {
+            const game = document.getElementById('game-selector').value;
+            const keyFile = keyFiles[game];
+
+            fetch(keyFile)
+                .then(response => response.text())
+                .then(data => {
+                    const keys = data.split('\n').filter(key => key.trim() !== '');
+                    const randomIndex = Math.floor(Math.random() * keys.length);
+                    const key = keys[randomIndex];
+                    document.getElementById('key-display').innerText = key;
+                    document.getElementById('generate-btn').disabled = true;
+                    startTimer();
+                    // Удалите использованный ключ
+                    keys.splice(randomIndex, 1);
+                    saveKeysToFile(keys.join('\n'), keyFile);
+                })
+                .catch(error => console.error('Error fetching key file:', error));
+        }
+
+        function saveKeysToFile(keys, keyFile) {
+            fetch(`save-keys.php?file=${keyFile}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `keys=${encodeURIComponent(keys)}`
+            })
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.error('Error saving keys:', error));
+        }
+
+        function copyKey() {
+            const key = document.getElementById('key-display').innerText;
+            navigator.clipboard.writeText(key).then(() => {
+                console.log('Key copied to clipboard');
+            }).catch(err => {
+                console.error('Error copying key:', err);
+            });
+        }
+
+        function startTimer() {
+            let time = Math.floor(Math.random() * 6) + 2;
+            const timerElement = document.getElementById('timer');
+            timerElement.innerText = `${time}:00`;
+
+            const countdown = setInterval(() => {
+                time--;
+                timerElement.innerText = `${time}:00`;
+
+                if (time <= 0) {
+                    clearInterval(countdown);
+                    document.getElementById('generate-btn').disabled = false;
+                }
+            }, 60000);
+        }
+    </script>
 </body>
 </html>
